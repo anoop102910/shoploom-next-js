@@ -16,10 +16,21 @@ import api from "@/lib/api";
 import { mutate } from "swr";
 import { useState } from "react";
 import { tst } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 const ShoppingCart = () => {
   const { cartItems, isLoading, error } = useCarts();
   const [pending, setPending] = useState(false);
+
+  const totalAmount = cartItems?.reduce((total, cartItem) => {
+    return total + cartItem.quantity * cartItem.product.price;
+  }, 0);
+  const totalDiscount = cartItems?.reduce((total, cartItem) => {
+    const itemDiscount = cartItem.quantity * cartItem.product.price * (cartItem.product.discount / 100);
+    return total + itemDiscount;
+  }, 0);
+  const totalPrice = totalAmount - totalDiscount;
+
   if (isLoading) return <Loader />;
   if (error) return <Error />;
 
@@ -35,16 +46,30 @@ const ShoppingCart = () => {
       setPending(false);
       tst.success("Quantity updated successfully")
     } catch (error) {
-      tst.error("Soemthing went wrong")
+      tst.error(error)
       setPending(false);
       console.log(error);
     }
   };
 
+
+  const EmptyCart = () => (
+    <div className="flex flex-col items-center justify-center h-full">
+      <p className="text-gray-500">No items in cart</p>
+      <div className="mt-4">
+        <Button href="/products" variant="outline">
+          Start Shopping
+        </Button>
+      </div>
+    </div>
+  );
+
+  if (cartItems.length === 0) return <EmptyCart />;
+
   return (
     <div className="flex h-full flex-col overflow-y-scroll scrollbar  w-full relative">
       <ScrollArea>
-        <div className="flex-1 ">
+        <div className="flex-1 mr-3">
           <div className="flex items-start justify-between">
             <h2 className="text-lg font-medium text-gray-900">Shopping cart</h2>
           </div>
@@ -77,7 +102,7 @@ const ShoppingCart = () => {
                           <Select
                             disabled={pending}
                             className="w-full"
-                            value={cartItem.quantity}
+                            // value={cartItem.quantity}
                             onValueChange={value => handleQuantityChange(cartItem, value)}
                           >
                             <SelectTrigger className="w-16 h-8 border-slate-600  focus:ring-0">
@@ -108,10 +133,18 @@ const ShoppingCart = () => {
         </div>
       </ScrollArea>
 
-      <div className="border-t sticky bottom-0 border-gray-200 px-4 py-6 sm:px-6">
+      <div className="border-t sticky bottom-0 space-y-2 border-gray-200 px-4 py-6 sm:px-6">
         <div className="flex justify-between text-base font-medium text-gray-900">
           <p>Subtotal</p>
-          <p>$262.00</p>
+          <p>${totalAmount}</p>
+        </div>
+        <div className="flex justify-between text-base font-medium text-gray-900">
+          <p>Discount</p>
+          <p>${totalDiscount}</p>
+        </div>
+        <div className="flex justify-between text-base font-medium text-gray-900">
+          <p>Total</p>
+          <p>{totalPrice}</p>
         </div>
         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
         <div className="mt-6">
@@ -134,5 +167,7 @@ const ShoppingCart = () => {
     </div>
   );
 };
+
+
 
 export default ShoppingCart;

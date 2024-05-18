@@ -16,9 +16,11 @@ import {
 import { useProfile } from "@/lib/data";
 import Loader from "@/components/shared/loader";
 import Error from "@/components/shared/error";
+import { Button } from "@/components/ui/button";
 
 export default function UpdateProfile() {
   const { profile, isLoading, error } = useProfile();
+  console.log(profile);
 
   const [formData, setFormData] = useState({
     name: profile?.name || "",
@@ -39,10 +41,11 @@ export default function UpdateProfile() {
     e.preventDefault();
     try {
       setPending(true);
-      await api.post("/users", formData);
+      await api.post("/users/profile", formData);
       tst.success("Profile updated");
       setPending(false);
     } catch (error) {
+      console.log(error);
       setPending(false);
       tst.error(error);
     }
@@ -63,7 +66,6 @@ export default function UpdateProfile() {
             name="name"
             id="name"
             placeholder="E.g. Anoop Singh"
-            required
             value={formData.name}
             onChange={handleChange}
           />
@@ -77,14 +79,16 @@ export default function UpdateProfile() {
             value={formData.gender}
             onValueChange={value => setFormData({ ...formData, gender: value })}
           >
-            <SelectTrigger className="col-span-3">
-              <SelectValue placeholder="Select a category" />
+            <SelectTrigger className="col-span-3 bg-white">
+              <SelectValue placeholder="Select a gender" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="male">Male</SelectItem>
               <SelectItem value="female">Female</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+        <div>
           <Label htmlFor="bio" className="mb-2">
             Bio
           </Label>
@@ -92,14 +96,13 @@ export default function UpdateProfile() {
             name="bio"
             id="bio"
             placeholder="Tell us something about yourself..."
-            required
             value={formData.bio}
             onChange={handleChange}
           />
         </div>
-        <LoadingButton type="submit" disabled={pending}>
+        <Button pending={pending} type="submit" >
           Save
-        </LoadingButton>
+        </Button>
       </form>
     </div>
   );

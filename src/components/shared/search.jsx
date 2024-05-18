@@ -46,7 +46,7 @@ function SearchInput({ className }) {
               "block w-full p-3 pl-10 text-sm text-slate-900 focus-within:outline-none border border-slate-300 rounded-lg bg-slate-50 focus:ring-blue-500 focus:border-blue-500 ",
               className
             )}
-            placeholder="Search Mockups, Logos..."
+            placeholder="Search ..."
             onChange={handleSearch}
             defaultValue={searchParams.get("query")?.toString()}
             required

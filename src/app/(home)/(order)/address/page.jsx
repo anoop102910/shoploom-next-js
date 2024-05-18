@@ -16,9 +16,12 @@ import { Button } from "@/components/ui/button";
 import Loader from "@/components/shared/loader";
 import Error from "@/components/shared/error";
 import Link from "next/link";
+import useSessionStorage from "@/hooks/useSessionStorage";
 
 function Address() {
   const { isLoading, error, addresses, mutate } = useAddresses();
+  const [selectedAddress, setSelectedAddress] = useSessionStorage()
+  console.log(selectedAddress);
   if (isLoading) return <Loader />;
   if (error) return <Error />;
 
@@ -42,7 +45,7 @@ function Address() {
         </Dialog>
       </div>
       <div>
-        <RadioGroup defaultValue="comfortable">
+        <RadioGroup value={selectedAddress} onValueChange={value=>setSelectedAddress(value)} defaultValue="comfortable" >
           {addresses.map(address => (
             <div
               key={address.id}

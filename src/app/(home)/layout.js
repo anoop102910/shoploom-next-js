@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/context/authprovider";
 
 export const metadata = {
-  title: "Netmarket",
+  title: "Shoploom",
   description: "",
 };
 

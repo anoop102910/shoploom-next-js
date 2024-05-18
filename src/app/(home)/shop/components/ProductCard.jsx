@@ -10,7 +10,7 @@ export const ProductCard = ({ product }) => {
   const discountedPrice = price - (price * discount) /100;
 
   return (
-    <div className="group  border-slate-100 flex w-full max-w-[260px] flex-col self-center overflow-hidden rounded-lg border ">
+    <div className="group flex w-full max-w-[260px] flex-col   ">
       <Link
         href={`/shop/${product.slug}`}
         className="relative  flex h-40 overflow-hidden rounded-xl"

@@ -5,7 +5,7 @@ import Dashboard from "@/components/shared/dashboard";
 import Navbar from "@/components/shared/navbar";
 
 export const metadata = {
-  title: "Netmarket",
+  title: "Shoploom",
   description: "",
 };
 

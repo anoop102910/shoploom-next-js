@@ -18,6 +18,7 @@ import {
 import { LayoutDashboard, ListOrderedIcon, Heart, LogOutIcon, User } from "lucide-react";
 import { Input } from "../ui/input";
 import SearchInput from "./search";
+import { Button } from "../ui/button";
 
 const menuItems = [
   { text: "Home", href: "/" },
@@ -98,9 +99,9 @@ const NavBar = () => {
               <li>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="outline-none focus-within:outline-none">
+                    <Button size="icon" variant="ghost">
                       <Avatar name={user.name} />
-                    </button>
+                    </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-48">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -128,10 +129,10 @@ const NavBar = () => {
             <li>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Icon icon="mynaui:cart" fontSize={28} className="text-orange-700 " />
+                  <Icon icon="mynaui:cart" fontSize={28} className="text-orange-700 cursor-pointer " />
                 </SheetTrigger>
-                <SheetContent className=" max-w-5xl" side="right">
-                  <ShoppingCart />
+                <SheetContent className=" max-w-6xl cursor-pointer" side="right">
+                  <ShoppingCart  />
                 </SheetContent>
               </Sheet>
             </li>

@@ -9,9 +9,16 @@ export const useCategories = query => {
   return { categories: data, error, isLoading, mutate };
 };
 
-export const useBrands = query => {
+export const useBrands = (queryParams = {}) => {
+  const params = new URLSearchParams();
+
+  if (queryParams.query) params.set("name", queryParams.query);
+  if (queryParams.categoryId) params.set("categoryId", queryParams.categoryId);
   let url = "/brands";
-  url = query ? `${url}?name=${query}` : url;
+
+  if (params.toString()) {
+    url += `?${params.toString()}`;
+  }
   const { data, error, isLoading, mutate } = useSWR(url, fetcher);
   return { brands: data, error, isLoading, mutate };
 };
@@ -69,9 +76,20 @@ export const useProfile = () => {
   return { profile: data, error, isLoading, mutate };
 };
 
-
-export const useReviews = (productId) => {
+export const useReviews = productId => {
   const { data, error, isLoading, mutate } = useSWR(`/reviews/product/${productId}`, fetcher);
   return { reviews: data, error, isLoading, mutate };
+};
+
+
+export const useOrders = () => {
+  const { data, error, isLoading, mutate } = useSWR("/orders", fetcher);
+  return { orders: data, error, isLoading, mutate };
+};
+
+
+export const useOrder = orderId => {
+  const { data, error, isLoading, mutate } = useSWR(`/orders/${orderId}`, fetcher);
+  return { order: data, error, isLoading, mutate };
 };
 

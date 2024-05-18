@@ -31,7 +31,7 @@ export default function OrderLayout({ children }) {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="mt-12">{children}</div>
+      <div className="mt-12 ">{children}</div>
     </div>
   );
 }

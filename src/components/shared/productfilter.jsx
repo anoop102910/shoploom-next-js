@@ -76,7 +76,7 @@ function ProductFilter({ className }) {
             Sort By
           </Label>
           <Select
-            // defaultValue={searchParams.get("categoryId") || "Sort By"}
+            defaultValue={searchParams.get("sortBy") || "Sort By"}
             onValueChange={value => handleParamsChange("sortBy", value)}
             className="w-full"
           >
@@ -87,6 +87,8 @@ function ProductFilter({ className }) {
               <SelectItem value="pricelowtohigh">Price low to high</SelectItem>
               <SelectItem value="pricehightolow">Price high to low</SelectItem>
               <SelectItem value="newest">Newest first</SelectItem>
+              <SelectItem value="discounthightolow">Discount high to low</SelectItem>
+              <SelectItem value="discountlowtohigh">Discount low to high</SelectItem>
               <SelectItem value="relevance">Relevance</SelectItem>
             </SelectContent>
           </Select>

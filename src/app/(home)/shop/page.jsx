@@ -13,14 +13,18 @@ function Page({ searchParams }) {
 
   return (
     <div className="flex gap-8 mt-6 flex-1 items-start ">
-      <ProductFilter className={" basis-1/5 max-sm:hidden min-h-[80vh] sticky top-0 right-0"} />
+      <ProductFilter className={"w-[300px] max-sm:hidden min-h-[80vh] sticky top-0 right-0"} />
       {isLoading ? (
-        <ProductSkeleton count={6} />
+        <ProductSkeleton count={9} />
       ) : (
-        <div className="flex mx-auto gap-4 basis-4/5 flex-wrap">
+        <div className="w-full">
           {products.length == 0 && (
-            <div className="text-xl flex justify-between w-full h-full items-center font-bold">
-              No Product found
+            <div className="flex flex-col items-center justify-center">
+              <h3 className="text-2xl font-bold mb-4">No products found</h3>
+              <p className="text-gray-500">
+                Oops! It seems like we could not find any products with the
+                given criteria.
+              </p>
             </div>
           )}
           <div className="flex gap-8 flex-wrap items-start">

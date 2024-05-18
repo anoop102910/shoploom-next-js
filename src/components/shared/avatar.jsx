@@ -1,3 +1,4 @@
+"use client"
 import { Avatar as ShadAvatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Avatar({ image, name }) {
