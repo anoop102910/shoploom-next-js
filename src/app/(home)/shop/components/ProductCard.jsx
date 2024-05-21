@@ -51,7 +51,7 @@ export const ProductCard = ({ product }) => {
 
             {avgRating && (
               <div className="text-xs px-1 py-[0.125rem] flex items-center text-white bg-green-600 gap-1 rounded">
-                <span className>{avgRating}</span>
+                <span className>{Math.ceil(avgRating * 10) / 10}</span>
                 <Icon icon="ic:round-star" />
               </div>
             )}

@@ -23,7 +23,11 @@ const BrandList = ({ searchParams }) => {
 
   const handleBrandAdd = async formData => {
     try {
-      const res = await api.post("/brands", formData);
+      const res = await api.post("/brands", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       mutate([...brands, res.data.data]);
       tst.success("Brand created successfully");
     } catch (error) {
@@ -45,7 +49,11 @@ const BrandList = ({ searchParams }) => {
   const handleBrandUpdate = async (id, formData) => {
     try {
       console.log(formData);
-      const res = await api.put(`/brands/${id}`, formData);
+      const res = await api.put(`/brands/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       mutate(brands.map(brand => (brand.id === id ? { ...brand, ...res.data.data } : brand)));
       tst.success("Brand updated successfully");
     } catch (error) {
@@ -64,7 +72,7 @@ const BrandList = ({ searchParams }) => {
           <DialogTrigger asChild>
             <Button variant="outline">Add Brand</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[600px]">
             <BrandForm onSubmit={handleBrandAdd} type="add" />
           </DialogContent>
         </Dialog>
@@ -74,14 +82,13 @@ const BrandList = ({ searchParams }) => {
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead >Name</TableHead>
-            <TableHead>Descrption</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead>Category</TableHead>
-            <TableHead >Action</TableHead>
+            <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         {isLoading ? (
-          <TableSkeleton columnCount={3}  />
+          <TableSkeleton columnCount={3} />
         ) : (
           <TableBody>
             {brands.map(brand => (

@@ -75,7 +75,7 @@ const dashboardItems = [
   {
     icon: Settings,
     title: "Settings",
-    link: "/admin/",
+    link: "/admin/settings/",
   },
 ];
 function Dashboard({ className }) {

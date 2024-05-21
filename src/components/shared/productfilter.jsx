@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCategories } from "@/lib/data";
+import { useBrands, useCategories } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 
 function ProductFilter({ className }) {
   const { categories, isLoading: categoryIsLoading } = useCategories();
+  const { brands, isLoading: brandIsLoading } = useBrands();
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -31,12 +32,13 @@ function ProductFilter({ className }) {
     if (params) router.replace(`${pathname}?${params.toString()}`);
   };
 
+
   const clearQuery = () => {
     router.replace(pathname);
   };
 
   return (
-    <div className={cn("bg-slate-200 rounded-md p-5 pt-6", className)}>
+    <div className={cn("bg-slate-200 rounded-md p-5 pt-6 max-h-[100vh] overflow-y-scroll scrollbar", className)}>
       <h2 className="text-xl font-medium  mb-6">Product Filter</h2>
       <form action="" className="space-y-6">
         <div className="space-y-1">
@@ -44,17 +46,7 @@ function ProductFilter({ className }) {
             Category
           </Label>
           <Select
-            defaultValue={
-              categories &&
-              searchParams.get("categoryId") &&
-              categories?.find(category => category.id == searchParams?.get("categoryId"))?.name
-            }
-            onValueChange={value =>
-              handleParamsChange(
-                "categoryId",
-                categories.find(category => category.name == value).id
-              )
-            }
+            onValueChange={value => handleParamsChange("categoryName", value)}
             className="w-full"
           >
             <SelectTrigger className="col-span-3 border-slate-600">
@@ -63,7 +55,7 @@ function ProductFilter({ className }) {
             <SelectContent>
               {categoryIsLoading
                 ? "Loading..."
-                : categories.map(category => (
+                : categories?.map(category => (
                     <SelectItem key={category.id} value={category.name}>
                       {category.name}
                     </SelectItem>
@@ -71,15 +63,37 @@ function ProductFilter({ className }) {
             </SelectContent>
           </Select>
         </div>
+        {/* <div className="space-y-2">
+            <Label htmlFor="brand" className="text-left">
+              Brand
+            </Label>
+            <div className="space-y-2">
+              {brandIsLoading ? (
+                "Loading..."
+              ) : (
+                brands?.map((brand) => (
+                  <div key={brand.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={brand.id}
+                      name="brandName"
+                      value={brand.name}
+                      onCheckedChange={() =>
+                        handleParamsChange("brandName", brand.name)
+                      }
+                    />
+                    <Label htmlFor={brand.id} className="text-left">
+                      {brand.name}
+                    </Label>
+                  </div>
+                ))
+              )}
+            </div>
+          </div> */}
         <div className="space-y-1">
           <Label htmlFor="sortby" className="text-right mb-5">
             Sort By
           </Label>
-          <Select
-            defaultValue={searchParams.get("sortBy") || "Sort By"}
-            onValueChange={value => handleParamsChange("sortBy", value)}
-            className="w-full"
-          >
+          <Select onValueChange={value => handleParamsChange("sortBy", value)} className="w-full">
             <SelectTrigger className="col-span-3 border-slate-600">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
@@ -165,6 +179,7 @@ function ProductFilter({ className }) {
               </div>
             </RadioGroup>
           </div>
+         
         </div>
       </form>
 

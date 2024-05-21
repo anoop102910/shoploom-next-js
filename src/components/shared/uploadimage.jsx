@@ -29,7 +29,6 @@ function UploadImage({ className, image, onImageSelect, ...props }) {
       </label>
       <input
         {...props}
-        required={true}
         accept="image/*"
         onChange={handleImageSelect}
         type="file"

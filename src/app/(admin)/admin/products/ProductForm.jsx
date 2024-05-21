@@ -15,16 +15,19 @@ import UploadImage from "@/components/shared/uploadimage";
 import { useBrands, useCategories } from "@/lib/data";
 
 const ProductForm = ({ onSubmit, product, type, searchParams }) => {
-  const [formData, setFormData] = useState({
-    title: product ? product.title : "",
-    description: product ? product.description : "",
-    price: product ? product.price : "",
-    quantity: product ? product.quantity : "",
-    discount: product ? product.discount : "",
-    categoryName: product ? product.category.name : "",
-    brandName: product ? product.brand.name : "",
-    image: product ? product.image : "",
-  });
+  const initialData = {
+    title: product?.title || "",
+    description: product?.description || "",
+    price: product?.price || "",
+    quantity: product?.quantity || "",
+    discount: product?.discount || "",
+    categoryName: product?.category?.name || "",
+    brandName: product?.brand?.name || "",
+    image: product?.image || "",
+  };
+
+  const [formData, setFormData] = useState(initialData);
+
   const [pending, setPending] = useState(false);
   const { categories, isLoading: categoryIsLoading } = useCategories();
   const {
@@ -77,7 +80,7 @@ const ProductForm = ({ onSubmit, product, type, searchParams }) => {
     };
 
     setPending(true);
-    if (type==='update') await onSubmit(product.id, updatedFormData);
+    if (type === "update") await onSubmit(product.id, updatedFormData);
     else await onSubmit(updatedFormData);
     setPending(false);
   };

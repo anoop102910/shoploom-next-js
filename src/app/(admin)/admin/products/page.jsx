@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import ProductRow from "./row";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import useSWR from "swr";
 import api from "@/lib/api";
 import { tst } from "@/lib/utils";
 import {

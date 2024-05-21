@@ -16,10 +16,16 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import CategoryForm from "./CategoryForm";
 
 function CategoryRow({ category, onDelete, onUpdate }) {
+  let name = 'rohan'
   return (
     <TableRow>
       <TableCell className="font-medium">{category.name}</TableCell>
-      <TableCell>{category.description ? category.description : "No Desciption"}</TableCell>
+      <TableCell >
+        {category.parentId ? category.parentCategory.name : "No Category"}
+      </TableCell>
+      <TableCell className="line-clamp-1" >
+        {category.description ? category.description.slice(0,10): "No Description"}
+      </TableCell>
       <TableCell>
         <form>
           <div className="space-x-2">
@@ -51,7 +57,7 @@ function CategoryRow({ category, onDelete, onUpdate }) {
                   Update
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-[600px]">
                 <CategoryForm category={category} onSubmit={onUpdate} />
               </DialogContent>
             </Dialog>

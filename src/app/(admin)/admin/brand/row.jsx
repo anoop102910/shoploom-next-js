@@ -19,7 +19,6 @@ function BrandRow({ brand, onDelete, onUpdate }) {
   return (
     <TableRow>
       <TableCell className="font-medium">{brand.name}</TableCell>
-      <TableCell>{brand.description ? brand.description : "No Desciption"}</TableCell>
       <TableCell>{brand.category.name}</TableCell>
       <TableCell>
         <form>
@@ -52,7 +51,7 @@ function BrandRow({ brand, onDelete, onUpdate }) {
                   Update
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-[600px]">
                 <BrandForm type={"update"} brand={brand} onSubmit={onUpdate} />
               </DialogContent>
             </Dialog>

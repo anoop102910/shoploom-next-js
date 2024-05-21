@@ -12,13 +12,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCategories } from "@/lib/data";
+import UploadImage from "@/components/shared/uploadimage";
 
 function BrandForm({ type, onSubmit, brand }) {
   const [formData, setFormData] = useState({
     name: brand ? brand.name : "",
     description: brand ? brand.description : "",
     categoryName: brand ? brand.categoryName : "",
+    image: brand ? brand.image : "",
   });
+
   const [pending, setPending] = useState(false);
 
   const { categories, isLoading: categoryIsLoading, error } = useCategories();
@@ -38,6 +41,7 @@ function BrandForm({ type, onSubmit, brand }) {
       name: formData.name,
       description: formData.description,
       categoryId: categoryId,
+      image:formData.image
     };
     setPending(true);
     await onSubmit(updatedformData);
@@ -49,6 +53,7 @@ function BrandForm({ type, onSubmit, brand }) {
     const updatedformData = {
       name: formData.name,
       description: formData.description,
+      image:formData.image
     };
     setPending(true);
     await onSubmit(brand.id, updatedformData);
@@ -115,9 +120,21 @@ function BrandForm({ type, onSubmit, brand }) {
             className="col-span-3"
           />
         </div>
+        <div className="grid grid-cols-4 gap-4">
+          <Label htmlFor="image" className="text-right">
+            Image
+          </Label>
+          <UploadImage
+            image={formData.image}
+            onImageSelect={image => setFormData({ ...formData, image })}
+            className={"col-span-3 h-32 w-32"}
+          />
+        </div>
       </div>
       <DialogFooter>
-        <Button pending={pending} type="submit">{type === "add" ? "Add Brand" : "Update Brand"}</Button>
+        <Button pending={pending} type="submit">
+          {type === "add" ? "Add Brand" : "Update Brand"}
+        </Button>
       </DialogFooter>
     </form>
   );

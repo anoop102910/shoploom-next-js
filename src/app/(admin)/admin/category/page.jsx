@@ -2,11 +2,7 @@
 import React, { useEffect, useState } from "react";
 import CategoryRow from "./row";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import api from "@/lib/api";
 import { useCategories } from "@/lib/data";
 import {
@@ -20,11 +16,12 @@ import {
 import TableSkeleton from "@/components/shared/tableskeleton";
 import CategoryForm from "./CategoryForm";
 import { tst } from "@/lib/utils";
+import Error from "@/components/shared/error";
 const CategoryList = ({ searchParams }) => {
   const query = searchParams.query;
-  const { categories, error, isLoading, mutate } = useCategories(query);
+  const { categories, error, isLoading, mutate } = useCategories({ query });
 
-  const handleSubmit = async (formData) => {
+  const handleSubmit = async formData => {
     try {
       const res = await api.post("/categories", formData);
       mutate([...categories, res.data.data]);
@@ -60,7 +57,7 @@ const CategoryList = ({ searchParams }) => {
     }
   };
 
-  if (error) return <p>Error</p>;
+  if (error) return <Error />;
 
   return (
     <div className="container mx-auto p-4">
@@ -70,7 +67,7 @@ const CategoryList = ({ searchParams }) => {
           <DialogTrigger asChild>
             <Button variant="outline">Add Category</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[600px]">
             <CategoryForm onSubmit={handleSubmit} type={"add"} />
           </DialogContent>
         </Dialog>
@@ -80,7 +77,8 @@ const CategoryList = ({ searchParams }) => {
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
-            <TableHead>Descrption</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Description</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
